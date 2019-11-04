@@ -15,6 +15,9 @@ jobs:
             - dotnet-packages-v1-{{ checksum "windows-legacy-app.csproj" }}
       - run:
           name: "Install project dependencies"
+          command: choco install dotnet4.6.2
+      - run:
+          name: "Install project dependencies"
           command: dotnet.exe restore
       - save_cache:
           paths:
