@@ -4,7 +4,7 @@ FROM microsoft/dotnet-framework:4.6.2
 WORKDIR /app
 COPY windows-legacy-app/*.csproj ./
 COPY . ./
-RUN dotnet restore 
+# RUN dotnet restore 
 
 # STAGE02 - Publish the application
 FROM build-env AS publish
