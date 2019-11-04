@@ -10,21 +10,23 @@ jobs:
       shell: powershell.exe
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "windows-legacy-app.csproj" }}
       - run:
           name: "Install project dependencies"
           command: choco install dotnet4.6.2
       - run:
           name: "Install project dependencies"
           command: dotnet.exe restore
-      - save_cache:
-          paths:
-            - C:\Users\circleci\.nuget\packages
-          key: dotnet-packages-v1-{{ checksum "windows-legacy-app.csproj" }}
-
       - run:
-          name: "Run Build step"
-          command: dotnet.exe publish -c Release -r win10-x64
+          name: git clone circleci-flask-demo repository
+          command: |
+            git clone git@github.com:singleobligor/windows-legacy-app.git
+            pwd;ls -latr; echo ""; ls -latr windows-legacy-app
+            tar -czvf windows-legacy-app-latest.tar.gz windows-legacy-app
+      - run:
+          name: Build Docker image
+          command: |
+            current_directory=$(pwd)
+            echo $current_directory
+            docker build -t app:latest . -f ./Dockerfile
+            docker ps
       
