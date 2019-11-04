@@ -25,7 +25,8 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t app:latest . -f ./Dockerfile
+            pwd
+            docker build -t app:latest . -f ./windows-legacy-app/Dockerfile
             docker images
             docker ps
       
